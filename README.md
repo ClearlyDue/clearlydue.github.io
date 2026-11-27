@@ -15,6 +15,6 @@ Public site of ClearlyDue: the design-partner (pilot programme) page, published 
 - **Every publish** (push to `main`): after two minutes, all page addresses are sent to IndexNow (Bing, Yandex, Seznam, Naver, Yep).
 - **Every Monday 07:17 (Barcelona):** Lighthouse runs on the live site and the site is checked (title, description, language alternates, structured data, robots, sitemap, images, 404, the .es redirect). The result is opened as a GitHub issue labelled `seo-report`. Run it any time from Actions → SEO automation → Run workflow.
 
-## One-time steps that need the owner's own accounts
-- Google Search Console: add `clearlydue.com` (Domain property, DNS TXT record at DonDominio), then submit `https://clearlydue.com/sitemap.xml`. Google does not use IndexNow.
-- Bing Webmaster Tools: import the site from Search Console (one click), so Bing reports clicks and positions too.
+## Search engine accounts
+- Google Search Console (account clearlydue.team@gmail.com): property `https://clearlydue.com/` verified on 27 Nov 2026 with the file `googled157c10a789465ea.html` (do not delete it); `sitemap.xml` submitted the same day (50 addresses found). Google does not use IndexNow.
+- Bing Webmaster Tools (optional): import the site from Search Console, so Bing reports clicks and positions too.
