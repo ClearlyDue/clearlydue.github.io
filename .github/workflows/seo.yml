@@ -1,0 +1,40 @@
+name: SEO automation
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '17 6 * * 1'   # every Monday, 07:17 in Barcelona (winter time)
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: write
+jobs:
+  notify-search-engines:
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Wait for GitHub Pages to publish the new version
+        run: sleep 120
+      - name: Submit every page address to IndexNow (Bing, Yandex, Seznam, Naver, Yep)
+        run: python3 scripts/indexnow.py
+  weekly-audit:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Lighthouse on the live site (mobile)
+        continue-on-error: true
+        run: npx --yes lighthouse@12 https://clearlydue.com/ --quiet --chrome-flags="--headless=new --no-sandbox" --output=json --output-path=lh.json --only-categories=performance,accessibility,best-practices,seo
+      - name: Live checks and report
+        run: python3 scripts/seo_audit.py lh.json > report.md
+      - name: Open the report as a GitHub issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh label create seo-report --color 0A7F70 --description "Weekly SEO report" --force -R "$GITHUB_REPOSITORY" || true
+          gh issue create -R "$GITHUB_REPOSITORY" --title "Weekly SEO report $(date -u +%Y-%m-%d)" --body-file report.md --label seo-report
+      - run: cat report.md >> "$GITHUB_STEP_SUMMARY"
