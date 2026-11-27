@@ -4,7 +4,7 @@ Public site of ClearlyDue: the design-partner (pilot programme) page, published 
 `clearlydue.es` and `www.clearlydue.es` send visitors here (repository `ClearlyDue/clearlydue-es`).
 
 ## Files
-- `index.html`: the pilot page, built from the browser edition (`node build.js`, folder `dist-partners`). Self-contained, in 50 languages. Version 1.4.0, Notion-style design (27 Nov 2026).
+- `index.html` and `i18n/`: the pilot page, built from the browser edition (`node build.js`, folder `dist-web`). English and Spanish are inside the page; each other language (48) is a file in `i18n/` loaded only when chosen, so the page is about 470 KB instead of 2.6 MB. Version 1.4.0, Notion-style design (27 Nov 2026).
 - `robots.txt`, `sitemap.xml`: tell search engines what to index. The sitemap lists one address per language (`/?lang=fr` and so on) with `hreflang` alternates.
 - `og-image.png`, `icon-512.png`, `apple-touch-icon.png`, `favicon-32.png`: images for link previews and icons.
 - `404.html`: page for unknown addresses.
